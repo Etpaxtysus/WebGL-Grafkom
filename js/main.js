@@ -1,6 +1,6 @@
 "use strict";
 
-import { parseMTL, parseMapArgs, parseOBJ } from "./parse";
+import { parseMTL, parseMapArgs, parseOBJ } from "./parse.js";
 import { vs, fs } from "./shaders.js";
 import { getExtents, getGeometriesExtents, degToRad } from "./utils.js";
 
