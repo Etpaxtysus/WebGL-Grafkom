@@ -67,18 +67,15 @@ async function main() {
   const zNear = radius / 100;
   const zFar = radius * 3;
 
-  // Variabel untuk kontrol freeze
   let freeze = false;
-  let elapsedTime = 0; // Total waktu berjalan
-  let previousTime = 0; // Waktu frame terakhir (untuk delta)
+  let elapsedTime = 0;
+  let previousTime = 0;
 
-  // Event listener untuk mouse click
   function onMouseClick(event) {
     freeze = !freeze;
   }
   document.addEventListener("click", onMouseClick, false);
 
-  // Event listener untuk keydown dan keyup (spasi)
   function onKeydown(event) {
     if (event.keyCode === 32) {
       freeze = true;
@@ -95,11 +92,10 @@ async function main() {
   document.addEventListener("keyup", onKeyup, false);
 
   function render(currentTime) {
-    currentTime *= 0.001; // Konversi waktu ke detik
-    const deltaTime = currentTime - previousTime; // Hitung delta waktu
-    previousTime = currentTime; // Simpan waktu sekarang untuk frame berikutnya
+    currentTime *= 0.001;
+    const deltaTime = currentTime - previousTime;
+    previousTime = currentTime;
 
-    // Tambahkan ke waktu total hanya jika animasi tidak freeze
     if (!freeze) {
       elapsedTime += deltaTime;
     }
@@ -129,7 +125,6 @@ async function main() {
 
     webglUtils.setUniforms(meshProgramInfo, sharedUniforms);
 
-    // Gunakan `elapsedTime` untuk menghitung rotasi
     let u_world = m4.yRotation(elapsedTime);
     u_world = m4.xRotate(u_world, degToRad(-360));
     u_world = m4.translate(u_world, ...objOffset);
