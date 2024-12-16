@@ -14,7 +14,7 @@ async function main() {
 
   const meshProgramInfo = webglUtils.createProgramInfo(gl, [vs, fs]);
 
-  const objHref = "./CabinetFix.obj";
+  const objHref = "./js/CabinetFix.obj";
   const response = await fetch(objHref);
   const text = await response.text();
   const obj = parseOBJ(text);
