@@ -31,8 +31,8 @@ async function main() {
   const defaultMaterial = {
     diffuse: [1.0, 0.9, 0.9],
     ambient: [0.2, 0.2, 0.2],
-    specular: [1.0, 1.0, 1.0],  
-    shininess: 200,            
+    specular: [1.0, 1.0, 1.0],
+    shininess: 200,
     opacity: 1.0,
     emissive: [0.1, 0.1, 0.1],
   };
@@ -67,12 +67,42 @@ async function main() {
   const zNear = radius / 100;
   const zFar = radius * 3;
 
-  function degToRad(deg) {
-    return (deg * Math.PI) / 180;
+  // Variabel untuk kontrol freeze
+  let freeze = false;
+  let elapsedTime = 0; // Total waktu berjalan
+  let previousTime = 0; // Waktu frame terakhir (untuk delta)
+
+  // Event listener untuk mouse click
+  function onMouseClick(event) {
+    freeze = !freeze;
+  }
+  document.addEventListener("click", onMouseClick, false);
+
+  // Event listener untuk keydown dan keyup (spasi)
+  function onKeydown(event) {
+    if (event.keyCode === 32) {
+      freeze = true;
+    }
   }
 
-  function render(time) {
-    time *= 0.001; 
+  function onKeyup(event) {
+    if (event.keyCode === 32) {
+      freeze = false;
+    }
+  }
+
+  document.addEventListener("keydown", onKeydown, false);
+  document.addEventListener("keyup", onKeyup, false);
+
+  function render(currentTime) {
+    currentTime *= 0.001; // Konversi waktu ke detik
+    const deltaTime = currentTime - previousTime; // Hitung delta waktu
+    previousTime = currentTime; // Simpan waktu sekarang untuk frame berikutnya
+
+    // Tambahkan ke waktu total hanya jika animasi tidak freeze
+    if (!freeze) {
+      elapsedTime += deltaTime;
+    }
 
     webglUtils.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -88,8 +118,8 @@ async function main() {
     const view = m4.inverse(camera);
 
     const sharedUniforms = {
-      u_lightDirection: m4.normalize([-0.5, 0.5, 1]), 
-      u_ambientLight: [0.3, 0.3, 0.3],                 
+      u_lightDirection: m4.normalize([-0.5, 0.5, 1]),
+      u_ambientLight: [0.3, 0.3, 0.3],
       u_view: view,
       u_projection: projection,
       u_viewWorldPosition: cameraPosition,
@@ -99,7 +129,8 @@ async function main() {
 
     webglUtils.setUniforms(meshProgramInfo, sharedUniforms);
 
-    let u_world = m4.yRotation(time);
+    // Gunakan `elapsedTime` untuk menghitung rotasi
+    let u_world = m4.yRotation(elapsedTime);
     u_world = m4.xRotate(u_world, degToRad(-360));
     u_world = m4.translate(u_world, ...objOffset);
 

@@ -1,2 +1,7 @@
 # WebGL-Grafkom
-WebGL Project for Computer Graphics 
+
+WebGL Drawing for Computer Graphics Course
+
+| Name           | NRP        | Kelas     |
+| ---            | ---        | ----------|
+| Rhenaldy Chandra | 5025221190 | Grafika Komputer E |
