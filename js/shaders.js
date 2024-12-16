@@ -1,6 +1,6 @@
 "use strict";
 
-export const vs = `
+export const vertexShaders = `
 attribute vec4 a_position;
 attribute vec3 a_normal;
 attribute vec4 a_color;
@@ -23,7 +23,7 @@ void main() {
 }
 `;
 
-export const fs = `
+export const fragmentShaders = `
 precision highp float;
 
 varying vec3 v_normal;

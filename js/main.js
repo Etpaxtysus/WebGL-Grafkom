@@ -1,7 +1,7 @@
 "use strict";
 
 import { parseMTL, parseOBJ } from "./parse.js";
-import { vs, fs } from "./shaders.js";
+import { vertexShaders, fragmentShaders } from "./shaders.js";
 import { getGeometriesExtents, degToRad } from "./utils.js";
 
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
     return;
   }
 
-  const meshProgramInfo = webglUtils.createProgramInfo(gl, [vs, fs]);
+  const meshProgramInfo = webglUtils.createProgramInfo(gl, [vertexShaders, fragmentShaders]);
 
   const objHref = "./js/CabinetFix.obj";
   const response = await fetch(objHref);
@@ -29,10 +29,10 @@ async function main() {
   const materials = parseMTL(matTexts.join("\n"));
 
   const defaultMaterial = {
-    diffuse: [1.0, 0.9, 0.9],
-    ambient: [0.2, 0.2, 0.2],
+    diffuse: [0.9, 0.9, 0.9],
+    ambient: [0.3, 0.3, 0.3],
     specular: [1.0, 1.0, 1.0],
-    shininess: 200,
+    shininess: 400,
     opacity: 1.0,
     emissive: [0.1, 0.1, 0.1],
   };

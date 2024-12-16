@@ -25,8 +25,6 @@ export function parseOBJ(text) {
   const noop = () => {};
 
   function newGeometry() {
-    // If there is an existing geometry and it's
-    // not empty then start a new one.
     if (geometry && geometry.data.position.length) {
       geometry = undefined;
     }
@@ -63,8 +61,6 @@ export function parseOBJ(text) {
       const objIndex = parseInt(objIndexStr);
       const index = objIndex + (objIndex >= 0 ? 0 : objVertexData[i].length);
       webglVertexData[i].push(...objVertexData[i][index]);
-      // if this is the position index (index 0) and we parsed
-      // vertex colors then copy the vertex colors to the webgl vertex color data
       if (i === 0 && objColors.length > 1) {
         geometry.data.color.push(...objColors[index]);
       }
