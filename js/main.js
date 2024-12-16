@@ -1,8 +1,8 @@
 "use strict";
 
-import { parseMTL, parseMapArgs, parseOBJ } from "./parse.js";
+import { parseMTL, parseOBJ } from "./parse.js";
 import { vs, fs } from "./shaders.js";
-import { getExtents, getGeometriesExtents, degToRad } from "./utils.js";
+import { getGeometriesExtents, degToRad } from "./utils.js";
 
 async function main() {
   /** @type {HTMLCanvasElement} */
