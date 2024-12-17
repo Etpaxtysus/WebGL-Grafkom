@@ -3,6 +3,7 @@
 import { parseMTL, parseOBJ } from "./parse.js";
 import { vertexShaders, fragmentShaders } from "./shaders.js";
 import { getGeometriesExtents, degToRad } from "./utils.js";
+import { setupIOHandlers } from "./ioHandler.js";
 
 async function main() {
   /** @type {HTMLCanvasElement} */
@@ -74,7 +75,7 @@ async function main() {
   function onMouseClick(event) {
     freeze = !freeze;
   }
-  document.addEventListener("click", onMouseClick, false);
+  setupIOHandlers(onMouseClick, onKeydown, onKeyup);
 
   function onKeydown(event) {
     if (event.keyCode === 32) {
@@ -87,9 +88,6 @@ async function main() {
       freeze = false;
     }
   }
-
-  document.addEventListener("keydown", onKeydown, false);
-  document.addEventListener("keyup", onKeyup, false);
 
   function render(currentTime) {
     currentTime *= 0.001;
